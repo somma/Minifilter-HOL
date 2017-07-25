@@ -1,18 +1,9 @@
-/*++
-
-Module Name:
-
-    filter1.c
-
-Abstract:
-
-    This is the main module of the filter_1 miniFilter driver.
-
-Environment:
-
-    Kernel mode
-
---*/
+/**
+ * @file    Minifilter driver dev HOL.
+ * @author  somma (fixbrain@gmail.com)
+ * @date    2017/01/25 created.
+ * @copyright All rights reserved by somma.
+**/
 
 #include <fltKernel.h>
 #include <dontuse.h>
@@ -49,7 +40,7 @@ DriverEntry (
     );
 
 NTSTATUS
-filter1InstanceSetup (
+holfilterInstanceSetup (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_SETUP_FLAGS Flags,
     _In_ DEVICE_TYPE VolumeDeviceType,
@@ -57,37 +48,37 @@ filter1InstanceSetup (
     );
 
 VOID
-filter1InstanceTeardownStart (
+holfilterInstanceTeardownStart (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_TEARDOWN_FLAGS Flags
     );
 
 VOID
-filter1InstanceTeardownComplete (
+holfilterInstanceTeardownComplete (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_TEARDOWN_FLAGS Flags
     );
 
 NTSTATUS
-filter1Unload (
+holfilterUnload (
     _In_ FLT_FILTER_UNLOAD_FLAGS Flags
     );
 
 NTSTATUS
-filter1InstanceQueryTeardown (
+holfilterInstanceQueryTeardown (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_QUERY_TEARDOWN_FLAGS Flags
     );
 
 FLT_PREOP_CALLBACK_STATUS
-filter1PreOperation (
+holfilterPreOperation (
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _Flt_CompletionContext_Outptr_ PVOID *CompletionContext
     );
 
 VOID
-filter1OperationStatusCallback (
+holfilterOperationStatusCallback (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ PFLT_IO_PARAMETER_BLOCK ParameterSnapshot,
     _In_ NTSTATUS OperationStatus,
@@ -95,7 +86,7 @@ filter1OperationStatusCallback (
     );
 
 FLT_POSTOP_CALLBACK_STATUS
-filter1PostOperation (
+holfilterPostOperation (
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_opt_ PVOID CompletionContext,
@@ -103,14 +94,14 @@ filter1PostOperation (
     );
 
 FLT_PREOP_CALLBACK_STATUS
-filter1PreOperationNoPostOperation (
+holfilterPreOperationNoPostOperation (
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _Flt_CompletionContext_Outptr_ PVOID *CompletionContext
     );
 
 BOOLEAN
-filter1DoRequestOperationStatus(
+holfilterDoRequestOperationStatus(
     _In_ PFLT_CALLBACK_DATA Data
     );
 
@@ -122,11 +113,11 @@ EXTERN_C_END
 
 #ifdef ALLOC_PRAGMA
 #pragma alloc_text(INIT, DriverEntry)
-#pragma alloc_text(PAGE, filter1Unload)
-#pragma alloc_text(PAGE, filter1InstanceQueryTeardown)
-#pragma alloc_text(PAGE, filter1InstanceSetup)
-#pragma alloc_text(PAGE, filter1InstanceTeardownStart)
-#pragma alloc_text(PAGE, filter1InstanceTeardownComplete)
+#pragma alloc_text(PAGE, holfilterUnload)
+#pragma alloc_text(PAGE, holfilterInstanceQueryTeardown)
+#pragma alloc_text(PAGE, holfilterInstanceSetup)
+#pragma alloc_text(PAGE, holfilterInstanceTeardownStart)
+#pragma alloc_text(PAGE, holfilterInstanceTeardownComplete)
 #endif
 
 //
@@ -138,198 +129,198 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
 #if 0 // TODO - List all of the requests to filter.
     { IRP_MJ_CREATE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_CREATE_NAMED_PIPE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_CLOSE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_READ,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_WRITE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_QUERY_INFORMATION,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_SET_INFORMATION,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_QUERY_EA,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_SET_EA,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_FLUSH_BUFFERS,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_QUERY_VOLUME_INFORMATION,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_SET_VOLUME_INFORMATION,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_DIRECTORY_CONTROL,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_FILE_SYSTEM_CONTROL,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_DEVICE_CONTROL,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_INTERNAL_DEVICE_CONTROL,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_SHUTDOWN,
       0,
-      filter1PreOperationNoPostOperation,
+      holfilterPreOperationNoPostOperation,
       NULL },                               //post operations not supported
 
     { IRP_MJ_LOCK_CONTROL,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_CLEANUP,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_CREATE_MAILSLOT,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_QUERY_SECURITY,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_SET_SECURITY,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_QUERY_QUOTA,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_SET_QUOTA,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_PNP,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_ACQUIRE_FOR_SECTION_SYNCHRONIZATION,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_RELEASE_FOR_SECTION_SYNCHRONIZATION,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_ACQUIRE_FOR_MOD_WRITE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_RELEASE_FOR_MOD_WRITE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_ACQUIRE_FOR_CC_FLUSH,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_RELEASE_FOR_CC_FLUSH,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_FAST_IO_CHECK_IF_POSSIBLE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_NETWORK_QUERY_OPEN,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_MDL_READ,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_MDL_READ_COMPLETE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_PREPARE_MDL_WRITE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_MDL_WRITE_COMPLETE,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_VOLUME_MOUNT,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
     { IRP_MJ_VOLUME_DISMOUNT,
       0,
-      filter1PreOperation,
-      filter1PostOperation },
+      holfilterPreOperation,
+      holfilterPostOperation },
 
 #endif // TODO
 
@@ -349,12 +340,12 @@ CONST FLT_REGISTRATION FilterRegistration = {
     NULL,                               //  Context
     Callbacks,                          //  Operation callbacks
 
-    filter1Unload,                           //  MiniFilterUnload
+    holfilterUnload,                           //  MiniFilterUnload
 
-    filter1InstanceSetup,                    //  InstanceSetup
-    filter1InstanceQueryTeardown,            //  InstanceQueryTeardown
-    filter1InstanceTeardownStart,            //  InstanceTeardownStart
-    filter1InstanceTeardownComplete,         //  InstanceTeardownComplete
+    holfilterInstanceSetup,                    //  InstanceSetup
+    holfilterInstanceQueryTeardown,            //  InstanceQueryTeardown
+    holfilterInstanceTeardownStart,            //  InstanceTeardownStart
+    holfilterInstanceTeardownComplete,         //  InstanceTeardownComplete
 
     NULL,                               //  GenerateFileName
     NULL,                               //  GenerateDestinationFileName
@@ -365,7 +356,7 @@ CONST FLT_REGISTRATION FilterRegistration = {
 
 
 NTSTATUS
-filter1InstanceSetup (
+holfilterInstanceSetup (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_SETUP_FLAGS Flags,
     _In_ DEVICE_TYPE VolumeDeviceType,
@@ -403,14 +394,14 @@ Return Value:
     PAGED_CODE();
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1InstanceSetup: Entered\n") );
+                  ("holfilter!holfilterInstanceSetup: Entered\n") );
 
     return STATUS_SUCCESS;
 }
 
 
 NTSTATUS
-filter1InstanceQueryTeardown (
+holfilterInstanceQueryTeardown (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_QUERY_TEARDOWN_FLAGS Flags
     )
@@ -445,14 +436,14 @@ Return Value:
     PAGED_CODE();
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1InstanceQueryTeardown: Entered\n") );
+                  ("holfilter!holfilterInstanceQueryTeardown: Entered\n") );
 
     return STATUS_SUCCESS;
 }
 
 
 VOID
-filter1InstanceTeardownStart (
+holfilterInstanceTeardownStart (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_TEARDOWN_FLAGS Flags
     )
@@ -481,12 +472,12 @@ Return Value:
     PAGED_CODE();
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1InstanceTeardownStart: Entered\n") );
+                  ("holfilter!holfilterInstanceTeardownStart: Entered\n") );
 }
 
 
 VOID
-filter1InstanceTeardownComplete (
+holfilterInstanceTeardownComplete (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_TEARDOWN_FLAGS Flags
     )
@@ -515,7 +506,7 @@ Return Value:
     PAGED_CODE();
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1InstanceTeardownComplete: Entered\n") );
+                  ("holfilter!holfilterInstanceTeardownComplete: Entered\n") );
 }
 
 
@@ -554,7 +545,7 @@ Return Value:
     UNREFERENCED_PARAMETER( RegistryPath );
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!DriverEntry: Entered\n") );
+                  ("holfilter!DriverEntry: Entered\n") );
 
     //
     //  Register with FltMgr to tell it our callback routines
@@ -584,7 +575,7 @@ Return Value:
 }
 
 NTSTATUS
-filter1Unload (
+holfilterUnload (
     _In_ FLT_FILTER_UNLOAD_FLAGS Flags
     )
 /*++
@@ -611,7 +602,7 @@ Return Value:
     PAGED_CODE();
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1Unload: Entered\n") );
+                  ("holfilter!holfilterUnload: Entered\n") );
 
     FltUnregisterFilter( gFilterHandle );
 
@@ -623,7 +614,7 @@ Return Value:
     MiniFilter callback routines.
 *************************************************************************/
 FLT_PREOP_CALLBACK_STATUS
-filter1PreOperation (
+holfilterPreOperation (
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _Flt_CompletionContext_Outptr_ PVOID *CompletionContext
@@ -659,7 +650,7 @@ Return Value:
     UNREFERENCED_PARAMETER( CompletionContext );
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1PreOperation: Entered\n") );
+                  ("holfilter!holfilterPreOperation: Entered\n") );
 
     //
     //  See if this is an operation we would like the operation status
@@ -670,15 +661,15 @@ Return Value:
     //        actually granted.
     //
 
-    if (filter1DoRequestOperationStatus( Data )) {
+    if (holfilterDoRequestOperationStatus( Data )) {
 
         status = FltRequestOperationStatusCallback( Data,
-                                                    filter1OperationStatusCallback,
+                                                    holfilterOperationStatusCallback,
                                                     (PVOID)(++OperationStatusCtx) );
         if (!NT_SUCCESS(status)) {
 
             PT_DBG_PRINT( PTDBG_TRACE_OPERATION_STATUS,
-                          ("filter1!filter1PreOperation: FltRequestOperationStatusCallback Failed, status=%08x\n",
+                          ("holfilter!holfilterPreOperation: FltRequestOperationStatusCallback Failed, status=%08x\n",
                            status) );
         }
     }
@@ -693,7 +684,7 @@ Return Value:
 
 
 VOID
-filter1OperationStatusCallback (
+holfilterOperationStatusCallback (
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ PFLT_IO_PARAMETER_BLOCK ParameterSnapshot,
     _In_ NTSTATUS OperationStatus,
@@ -735,10 +726,10 @@ Return Value:
     UNREFERENCED_PARAMETER( FltObjects );
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1OperationStatusCallback: Entered\n") );
+                  ("holfilter!holfilterOperationStatusCallback: Entered\n") );
 
     PT_DBG_PRINT( PTDBG_TRACE_OPERATION_STATUS,
-                  ("filter1!filter1OperationStatusCallback: Status=%08x ctx=%p IrpMj=%02x.%02x \"%s\"\n",
+                  ("holfilter!holfilterOperationStatusCallback: Status=%08x ctx=%p IrpMj=%02x.%02x \"%s\"\n",
                    OperationStatus,
                    RequesterContext,
                    ParameterSnapshot->MajorFunction,
@@ -748,7 +739,7 @@ Return Value:
 
 
 FLT_POSTOP_CALLBACK_STATUS
-filter1PostOperation (
+holfilterPostOperation (
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_opt_ PVOID CompletionContext,
@@ -787,14 +778,14 @@ Return Value:
     UNREFERENCED_PARAMETER( Flags );
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1PostOperation: Entered\n") );
+                  ("holfilter!holfilterPostOperation: Entered\n") );
 
     return FLT_POSTOP_FINISHED_PROCESSING;
 }
 
 
 FLT_PREOP_CALLBACK_STATUS
-filter1PreOperationNoPostOperation (
+holfilterPreOperationNoPostOperation (
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _Flt_CompletionContext_Outptr_ PVOID *CompletionContext
@@ -829,7 +820,7 @@ Return Value:
     UNREFERENCED_PARAMETER( CompletionContext );
 
     PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("filter1!filter1PreOperationNoPostOperation: Entered\n") );
+                  ("holfilter!holfilterPreOperationNoPostOperation: Entered\n") );
 
     // This template code does not do anything with the callbackData, but
     // rather returns FLT_PREOP_SUCCESS_NO_CALLBACK.
@@ -840,7 +831,7 @@ Return Value:
 
 
 BOOLEAN
-filter1DoRequestOperationStatus(
+holfilterDoRequestOperationStatus(
     _In_ PFLT_CALLBACK_DATA Data
     )
 /*++

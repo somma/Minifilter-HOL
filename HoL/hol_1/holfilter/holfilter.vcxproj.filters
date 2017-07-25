@@ -19,17 +19,17 @@
     </Filter>
   </ItemGroup>
  <ItemGroup>
-    <Inf Include="filter_1.inf">
+    <Inf Include="holfilter.inf">
       <Filter>Driver Files</Filter>
     </Inf>
   </ItemGroup>  
   <ItemGroup>
-    <ClCompile Include="filter_1.c">
+    <ClCompile Include="holfilter.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="filter_1.rc">
+    <ResourceCompile Include="holfilter.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 ;;;
-;;; filter_1
+;;; holfilter
 ;;;
 
 [Version]
@@ -7,11 +7,9 @@ Signature   = "$Windows NT$"
 ; TODO - Change the Class and ClassGuid to match the Load Order Group value, see https://msdn.microsoft.com/en-us/windows/hardware/gg462963
 Class       = "ActivityMonitor"                         ;This is determined by the work this filter driver does
 ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}    ;This value is determined by the Load Order Group value
-;Class = "_TODO_Change_Class_appropriately_"
-;ClassGuid = {_TODO_Change_ClassGuid_appropriately_}
 Provider    = %ManufacturerName%
 DriverVer   = 
-CatalogFile = filter_1.cat
+CatalogFile = holfilter.cat
 
 [DestinationDirs]
 DefaultDestDir          = 12
@@ -74,7 +72,7 @@ HKR,"Instances\"%Instance1.Name%,"Flags",0x00010001,%Instance1.Flags%
 %DriverName%.sys
 
 [SourceDisksFiles]
-filter_1.sys = 1,,
+holfilter.sys = 1,,
 
 [SourceDisksNames]
 1 = %DiskId1%,,,
@@ -86,14 +84,14 @@ filter_1.sys = 1,,
 [Strings]
 ; TODO - Add your manufacturer
 ManufacturerName        = "Template"
-ServiceDescription      = "filter_1 Mini-Filter Driver"
-ServiceName             = "filter_1"
-DriverName              = "filter_1"
-DiskId1                 = "filter_1 Device Installation Disk"
+ServiceDescription      = "holfilter Mini-Filter Driver"
+ServiceName             = "holfilter"
+DriverName              = "holfilter"
+DiskId1                 = "holfilter Device Installation Disk"
 
 ;Instances specific information.
-DefaultInstance         = "filter_1 Instance"
-Instance1.Name          = "filter_1 Instance"
+DefaultInstance         = "holfilter Instance"
+Instance1.Name          = "holfilter Instance"
 ; TODO - Change the altitude value, see https://msdn.microsoft.com/en-us/windows/hardware/drivers/ifs/load-order-groups-and-altitudes-for-minifilter-drivers
 Instance1.Altitude       = "_TODO_Change_Altitude_appropriately_"
 Instance1.Flags         = 0x0              ; Allow all attachments

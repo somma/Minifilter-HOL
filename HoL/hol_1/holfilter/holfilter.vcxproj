@@ -16,21 +16,21 @@
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>    
+    </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="filter_1.rc" />
-    <ClCompile Include="filter_1.c" />
-    <Inf Include="filter_1.inf" />
+    <ResourceCompile Include="holfilter.rc" />
+    <ClCompile Include="holfilter.c" />
+    <Inf Include="holfilter.inf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{FF887913-EAD6-4D87-AF3B-BD4A311D12D0}</ProjectGuid>
+    <ProjectGuid>{5618B59C-A9C2-4145-9CEE-9779A4F15217}</ProjectGuid>
     <TemplateGuid>{f2f62967-0815-4fd7-9b86-6eedcac766eb}</TemplateGuid>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration>Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
-    <RootNamespace>filter_1</RootNamespace>
+    <RootNamespace>holfilter</RootNamespace>
     <WindowsTargetPlatformVersion>$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
