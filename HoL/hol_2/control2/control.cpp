@@ -26,7 +26,7 @@ int main()
 	driver_path
 		<< get_current_module_dirEx()
 		<< L"\\"
-		<< holFilter;
+		<< holFilterw;
 
 	scm_context scm(driver_path.str().c_str(),
 					holFilterService,

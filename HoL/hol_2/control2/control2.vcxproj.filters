@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\work.mylib\src\log.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\RegistryUtil.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\scm_context.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\Win32Utils.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\work.mylib\src\log.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\RegistryUtil.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\scm_context.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\Win32Utils.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MyLib">
+      <UniqueIdentifier>{ce24097d-d1e8-403c-8816-c0ec16b7b80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{d192096e-0bdb-4700-be19-0ed47085f3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{b398fc88-52fb-4c91-942b-d8cf861ef8e3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
