@@ -78,7 +78,7 @@ BoB 6th, programming lecture by somma (fixbrain@gmail.com)
     1. `_MyLib` 소스코드 빌드 
         _MyLib 을 빌드가 완료되면 `x:\` 드라이브에 생성된 실행파일을 복사하도록 설정되어있으므로 _MyLib 의 속성페이지에 들어가서 아래 Post-BuildEvent 섹션에 정의된 내용을 삭제한다. 
 
-        ![img](.\img\img00.png)
+        ![post-build](.\images\img00.png)
 
 
 1. WDK 샘플 빌드
