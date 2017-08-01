@@ -31,7 +31,7 @@ ULONG gTraceFlags = PTDBG_TRACE_ROUTINES | PTDBG_TRACE_OPERATION_STATUS;
     Prototypes
 *************************************************************************/
 
-EXTERN_C_START
+//EXTERN_C_START
 
 DRIVER_INITIALIZE DriverEntry;
 NTSTATUS
@@ -106,7 +106,7 @@ holfilterDoRequestOperationStatus(
     _In_ PFLT_CALLBACK_DATA Data
     );
 
-EXTERN_C_END
+//EXTERN_C_END
 
 //
 //  Assign text sections for each routine.
