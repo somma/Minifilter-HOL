@@ -107,6 +107,42 @@ PostCreateOperationCallback(
 	);
 
 
+FLT_PREOP_CALLBACK_STATUS
+PreCloseOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_Flt_CompletionContext_Outptr_ PVOID *CompletionContext
+);
+
+FLT_POSTOP_CALLBACK_STATUS
+PostCloseOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_In_opt_ PVOID CompletionContext,
+	_In_ FLT_POST_OPERATION_FLAGS Flags
+);
+
+
+FLT_PREOP_CALLBACK_STATUS
+PreCleanupOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_Flt_CompletionContext_Outptr_ PVOID *CompletionContext
+);
+
+FLT_POSTOP_CALLBACK_STATUS
+PostCleanupOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_In_opt_ PVOID CompletionContext,
+	_In_ FLT_POST_OPERATION_FLAGS Flags
+);
+
+
+
+
+
+
 
 
 
@@ -159,19 +195,21 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
 		PreCreateOperationCallback,
 		PostCreateOperationCallback
 	},
+	{ 
+		IRP_MJ_CLOSE,
+		0,
+		PreCloseOperationCallback,
+		PostCloseOperationCallback
+	},
+	{ 
+		IRP_MJ_CLEANUP,
+		0,
+		PreCleanupOperationCallback,
+		PostCleanupOperationCallback
+	},
 
 #if 0 // TODO - List all of the requests to filter.
-    { IRP_MJ_CREATE,
-      0,
-      holfilterPreOperation,
-      holfilterPostOperation },
-
     { IRP_MJ_CREATE_NAMED_PIPE,
-      0,
-      holfilterPreOperation,
-      holfilterPostOperation },
-
-    { IRP_MJ_CLOSE,
       0,
       holfilterPreOperation,
       holfilterPostOperation },
@@ -251,10 +289,6 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
       holfilterPreOperation,
       holfilterPostOperation },
 
-    { IRP_MJ_CLEANUP,
-      0,
-      holfilterPreOperation,
-      holfilterPostOperation },
 
     { IRP_MJ_CREATE_MAILSLOT,
       0,
@@ -667,14 +701,45 @@ PreCreateOperationCallback (
     _Flt_CompletionContext_Outptr_ PVOID *CompletionContext
     )
 {
-	NTSTATUS status = STATUS_UNSUCCESSFUL;
-
-	UNREFERENCED_PARAMETER(Data);
-    UNREFERENCED_PARAMETER( FltObjects );
+	PAGED_CODE(); 
+	UNREFERENCED_PARAMETER( Data );
+	UNREFERENCED_PARAMETER( FltObjects );
     UNREFERENCED_PARAMETER( CompletionContext );
 
-	status = status;
-	log_info "pre create" log_end;
+	// 
+	//	I/O 대상 파일명을 구한다.
+	// 
+	//
+	//PFLT_FILE_NAME_INFORMATION FileNameInfo = NULL;
+	//NTSTATUS status = FltGetFileNameInformation(Data,
+	//											FLT_FILE_NAME_NORMALIZED | FLT_FILE_NAME_QUERY_DEFAULT,
+	//											&FileNameInfo);
+	//if (!NT_SUCCESS(status))
+	//{
+	//	log_err "FltGetFileNameInformation() failed. status=0x%08x",
+	//		status
+	//		log_end;
+
+	//	ASSERT(NULL == FileNameInfo);
+	//	return FLT_PREOP_SUCCESS_NO_CALLBACK;
+	//}
+	//
+	//status = FltParseFileNameInformation(FileNameInfo);
+	//if (!NT_SUCCESS(status))
+	//{
+	//	log_err "FltParseFileNameInformation() failed. status=0x%08x",
+	//		status
+	//		log_end;
+	//	
+	//	FltReleaseFileNameInformation(FileNameInfo);
+	//	return FLT_PREOP_SUCCESS_NO_CALLBACK;
+	//}
+
+	//log_info
+	//	"FileName=%wZ",
+	//	&FileNameInfo->Name
+	//	log_end;
+	log_info "hello :)" log_end;
 
     return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -690,15 +755,94 @@ PostCreateOperationCallback(
     _In_ FLT_POST_OPERATION_FLAGS Flags
     )
 {
-    UNREFERENCED_PARAMETER( Data );
+	PAGED_CODE(); 
+	
+	UNREFERENCED_PARAMETER( Data );
     UNREFERENCED_PARAMETER( FltObjects );
     UNREFERENCED_PARAMETER( CompletionContext );
     UNREFERENCED_PARAMETER( Flags );
 
-	log_info "post create" log_end;
+	//log_info "post create" log_end;
 
     return FLT_POSTOP_FINISHED_PROCESSING;
 }
+
+FLT_PREOP_CALLBACK_STATUS
+PreCloseOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_Flt_CompletionContext_Outptr_ PVOID *CompletionContext
+	)
+{
+	NTSTATUS status = STATUS_UNSUCCESSFUL;
+
+	UNREFERENCED_PARAMETER(Data);
+	UNREFERENCED_PARAMETER(FltObjects);
+	UNREFERENCED_PARAMETER(CompletionContext);
+
+	status = status;
+	log_info "pre close" log_end;
+
+	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
+}
+
+
+FLT_POSTOP_CALLBACK_STATUS
+PostCloseOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_In_opt_ PVOID CompletionContext,
+	_In_ FLT_POST_OPERATION_FLAGS Flags
+	) 
+{
+	UNREFERENCED_PARAMETER(Data);
+	UNREFERENCED_PARAMETER(FltObjects);
+	UNREFERENCED_PARAMETER(CompletionContext);
+	UNREFERENCED_PARAMETER(Flags);
+
+	log_info "post close" log_end;
+
+	return FLT_POSTOP_FINISHED_PROCESSING;
+}
+
+FLT_PREOP_CALLBACK_STATUS
+PreCleanupOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_Flt_CompletionContext_Outptr_ PVOID *CompletionContext
+	)
+{
+	NTSTATUS status = STATUS_UNSUCCESSFUL;
+
+	UNREFERENCED_PARAMETER(Data);
+	UNREFERENCED_PARAMETER(FltObjects);
+	UNREFERENCED_PARAMETER(CompletionContext);
+
+	status = status;
+	log_info "pre cleanup" log_end;
+
+	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
+}
+
+
+FLT_POSTOP_CALLBACK_STATUS
+PostCleanupOperationCallback(
+	_Inout_ PFLT_CALLBACK_DATA Data,
+	_In_ PCFLT_RELATED_OBJECTS FltObjects,
+	_In_opt_ PVOID CompletionContext,
+	_In_ FLT_POST_OPERATION_FLAGS Flags
+	)
+{
+	UNREFERENCED_PARAMETER(Data);
+	UNREFERENCED_PARAMETER(FltObjects);
+	UNREFERENCED_PARAMETER(CompletionContext);
+	UNREFERENCED_PARAMETER(Flags);
+
+	log_info "post cleanup" log_end;
+
+	return FLT_POSTOP_FINISHED_PROCESSING;
+}
+
 
 
 
