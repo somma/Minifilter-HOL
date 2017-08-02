@@ -621,12 +621,14 @@ Return Value:
     NTSTATUS status;
 
     UNREFERENCED_PARAMETER( RegistryPath );
+
+#ifdef _DEBUG
 	PT_DBG_PRINT(PTDBG_TRACE_ROUTINES, (
 		"\n===============================================================================\n"\
 		"Compiled at %s on %s \n"\
 		"===============================================================================\n",
 		__TIME__, __DATE__));
-
+#endif 
 
 	//
 	//	반드시 DriverEntry 에서 호출해주어야 log_xxx 매크로를 사용할 수 있다. 

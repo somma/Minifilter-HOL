@@ -29,7 +29,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="holfilter.cpp">
+    <ClCompile Include="holfilter.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
