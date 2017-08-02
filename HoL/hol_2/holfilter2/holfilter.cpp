@@ -28,6 +28,16 @@ ULONG gTraceFlags = PTDBG_TRACE_ROUTINES | PTDBG_TRACE_OPERATION_STATUS;
         DbgPrint _string :                          \
         ((int)0))
 
+
+bool
+equal_tail_unicode_string(
+	_In_ const PUNICODE_STRING full,
+	_In_ const PUNICODE_STRING tail,
+	_In_ bool case_insensitive
+);
+
+
+
 /*************************************************************************
     Prototypes
 *************************************************************************/
@@ -710,37 +720,55 @@ PreCreateOperationCallback (
 	//	I/O 대상 파일명을 구한다.
 	// 
 	//
-	//PFLT_FILE_NAME_INFORMATION FileNameInfo = NULL;
-	//NTSTATUS status = FltGetFileNameInformation(Data,
-	//											FLT_FILE_NAME_NORMALIZED | FLT_FILE_NAME_QUERY_DEFAULT,
-	//											&FileNameInfo);
-	//if (!NT_SUCCESS(status))
-	//{
-	//	log_err "FltGetFileNameInformation() failed. status=0x%08x",
-	//		status
-	//		log_end;
+	PFLT_FILE_NAME_INFORMATION FileNameInfo = NULL;
+	NTSTATUS status = FltGetFileNameInformation(Data,
+												FLT_FILE_NAME_NORMALIZED | FLT_FILE_NAME_QUERY_DEFAULT,
+												&FileNameInfo);
+	if (!NT_SUCCESS(status))
+	{
+		log_err "FltGetFileNameInformation() failed. status=0x%08x",
+			status
+			log_end;
 
-	//	ASSERT(NULL == FileNameInfo);
-	//	return FLT_PREOP_SUCCESS_NO_CALLBACK;
-	//}
+		ASSERT(NULL == FileNameInfo);
+		return FLT_PREOP_SUCCESS_NO_CALLBACK;
+	}
+	
+	status = FltParseFileNameInformation(FileNameInfo);
+	if (!NT_SUCCESS(status))
+	{
+		log_err "FltParseFileNameInformation() failed. status=0x%08x",
+			status
+			log_end;
+		
+		FltReleaseFileNameInformation(FileNameInfo);
+		return FLT_PREOP_SUCCESS_NO_CALLBACK;
+	}
+
 	//
-	//status = FltParseFileNameInformation(FileNameInfo);
-	//if (!NT_SUCCESS(status))
-	//{
-	//	log_err "FltParseFileNameInformation() failed. status=0x%08x",
-	//		status
-	//		log_end;
-	//	
-	//	FltReleaseFileNameInformation(FileNameInfo);
-	//	return FLT_PREOP_SUCCESS_NO_CALLBACK;
-	//}
+	//	파일명 비교
+	//
+	UNICODE_STRING txt_file;
+	RtlInitUnicodeString(&txt_file, L".txt");
+	if (true == equal_tail_unicode_string(&FileNameInfo->Name, &txt_file, true))
+	{
+		//
+		//	matched
+		// 
+		Data->IoStatus.Status = STATUS_ACCESS_DENIED;
+		Data->IoStatus.Information = 0;
 
-	//log_info
-	//	"FileName=%wZ",
-	//	&FileNameInfo->Name
-	//	log_end;
-	log_info "hello :)" log_end;
+		log_info
+			"Denied, FileName=%wZ",
+			&FileNameInfo->Name
+			log_end;
 
+		return FLT_PREOP_COMPLETE;
+	}
+	else
+	{
+		//log_info "hello :)" log_end;
+	}
     return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
 
@@ -781,7 +809,7 @@ PreCloseOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 
 	status = status;
-	log_info "pre close" log_end;
+	//log_info "pre close" log_end;
 
 	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -800,7 +828,7 @@ PostCloseOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 	UNREFERENCED_PARAMETER(Flags);
 
-	log_info "post close" log_end;
+	//log_info "post close" log_end;
 
 	return FLT_POSTOP_FINISHED_PROCESSING;
 }
@@ -819,7 +847,7 @@ PreCleanupOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 
 	status = status;
-	log_info "pre cleanup" log_end;
+	//log_info "pre cleanup" log_end;
 
 	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -838,7 +866,7 @@ PostCleanupOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 	UNREFERENCED_PARAMETER(Flags);
 
-	log_info "post cleanup" log_end;
+	//log_info "post cleanup" log_end;
 
 	return FLT_POSTOP_FINISHED_PROCESSING;
 }
@@ -1113,4 +1141,55 @@ Return Value:
               ((iopb->MajorFunction == IRP_MJ_DIRECTORY_CONTROL) &&
                (iopb->MinorFunction == IRP_MN_NOTIFY_CHANGE_DIRECTORY))
              );
+}
+
+
+
+/// @brief	full: ABCDEFGHIJKLMNOPQ
+///			tail :            MNOPQ
+///				                  ^
+///				                 ^
+///				                ^
+///				               ^
+///				              ^
+///							 순서로 문자열을 비교하고, 
+///			문자열이 매칭되면 true 를 리턴한다.
+bool
+equal_tail_unicode_string(
+	_In_ const PUNICODE_STRING full,
+	_In_ const PUNICODE_STRING tail,
+	_In_ bool case_insensitive
+	)
+{
+	ULONG i;
+	USHORT full_count;
+	USHORT tail_count;
+
+	if (full == NULL || tail == NULL) return false;
+
+	full_count = full->Length / sizeof(WCHAR);
+	tail_count = tail->Length / sizeof(WCHAR);
+
+	if (full_count < tail_count) return false;
+	if (tail_count == 0) return false;
+
+	if (case_insensitive)
+	{
+		for (i = 1; i <= tail_count; ++i)
+		{
+			if (RtlUpcaseUnicodeChar(full->Buffer[full_count - i]) !=
+				RtlUpcaseUnicodeChar(tail->Buffer[tail_count - i]))
+				return false;
+		}
+	}
+	else
+	{
+		for (i = 1; i <= tail_count; ++i)
+		{
+			if (full->Buffer[full_count - i] != tail->Buffer[tail_count - i])
+				return false;
+		}
+	}
+
+	return true;
 }

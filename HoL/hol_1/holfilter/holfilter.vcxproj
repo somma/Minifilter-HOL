@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="holfilter.rc" />
-    <ClCompile Include="holfilter.c" />
+    <ClCompile Include="holfilter.cpp" />
     <Inf Include="holfilter.inf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
