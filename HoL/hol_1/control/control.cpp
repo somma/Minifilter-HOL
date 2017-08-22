@@ -38,7 +38,7 @@ int main()
 	//
 	//	holFilter 서비스 설치 
 	// 
-	if (true != scm.install_service())
+	if (true != scm.install_service(false))
 	{
 		log_err "scm.install_service() failed." log_end;
 		return -1;

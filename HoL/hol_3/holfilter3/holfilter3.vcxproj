@@ -19,19 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="proc_callback.cpp" />
     <ResourceCompile Include="holfilter.rc" />
     <ClCompile Include="dbg_msg.cpp" />
-    <ClCompile Include="holfilter2.cpp" />
+    <ClCompile Include="holfilter3.cpp" />
     <Inf Include="holfilter.inf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F1CB457D-D70C-468B-A239-2DB2A46551FC}</ProjectGuid>
+    <ProjectGuid>{1A9AA238-DA7A-4C7C-BFA9-211D7A8FDDAA}</ProjectGuid>
     <TemplateGuid>{f2f62967-0815-4fd7-9b86-6eedcac766eb}</TemplateGuid>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration>Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
-    <RootNamespace>holfilter2</RootNamespace>
+    <RootNamespace>holfilter3</RootNamespace>
     <WindowsTargetPlatformVersion>$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -119,6 +120,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <AdditionalDependencies>fltmgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -158,8 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dbg_msg.h" />
-    <ClInclude Include="holfilter2.h" />
+    <ClInclude Include="holfilter3.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="proc_callback.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,8 +20,7 @@ Environment:
 #ifndef __SCANUSER_H__
 #define __SCANUSER_H__
 
-// refac
-#pragma pack(push)
+//#pragma pack(push)
 #pragma pack(1)
 
 typedef struct _SCANNER_MESSAGE {
@@ -64,8 +63,8 @@ typedef struct _SCANNER_REPLY_MESSAGE {
 
 } SCANNER_REPLY_MESSAGE, *PSCANNER_REPLY_MESSAGE;
 
-// refac
-#pragma pack(pop)
+// hol-todo
+//#pragma pack(pop)
 
 #endif //  __SCANUSER_H__
 

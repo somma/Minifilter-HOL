@@ -530,6 +530,7 @@ Return Value:
     
     if (ScannedExtensions != &ScannedExtensionDefault && ScannedExtensions != NULL) {
 
+		// hol-todo
         //ExFreePoolWithTag( ScannedExtensions, SCANNER_STRING_TAG );
     }
 

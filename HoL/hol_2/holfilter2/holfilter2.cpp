@@ -622,6 +622,7 @@ Return Value:
 
     UNREFERENCED_PARAMETER( RegistryPath );
 
+	
 #ifdef _DEBUG
 	PT_DBG_PRINT(PTDBG_TRACE_ROUTINES, (
 		"\n===============================================================================\n"\
@@ -750,6 +751,7 @@ PreCreateOperationCallback (
 	//
 	//	파일명 비교
 	//
+	FLT_PREOP_CALLBACK_STATUS ret = FLT_PREOP_SUCCESS_WITH_CALLBACK;
 	UNICODE_STRING txt_file;
 	RtlInitUnicodeString(&txt_file, L".txt");
 	if (true == equal_tail_unicode_string(&FileNameInfo->Name, &txt_file, true))
@@ -765,13 +767,17 @@ PreCreateOperationCallback (
 			&FileNameInfo->Name
 			log_end;
 
-		return FLT_PREOP_COMPLETE;
+		
+		ret = FLT_PREOP_COMPLETE;
 	}
 	else
 	{
 		//log_info "hello :)" log_end;
 	}
-    return FLT_PREOP_SUCCESS_WITH_CALLBACK;
+
+	// hol-todo
+	//FltReleaseFileNameInformation(FileNameInfo);
+    return ret;
 }
 
 
