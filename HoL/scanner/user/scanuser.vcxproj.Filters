@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx;*</Extensions>
+      <UniqueIdentifier>{D5A4D49A-D6AE-4159-B919-7E13BED474C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <UniqueIdentifier>{D08A6EDE-21C1-491E-A693-67FB47DB6E9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;man;xml</Extensions>
+      <UniqueIdentifier>{52F79952-01DB-4878-8287-0A8B91178B37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLib">
+      <UniqueIdentifier>{97715ad8-4aa7-4ba1-aae6-10070bac80a9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="scanUser.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\log.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\RegistryUtil.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\scm_context.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\work.mylib\src\Win32Utils.h">
+      <Filter>MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scanUser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\log.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\RegistryUtil.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\scm_context.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\work.mylib\src\Win32Utils.cpp">
+      <Filter>MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
