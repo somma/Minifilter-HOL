@@ -322,6 +322,12 @@ main (
 		bool installed = false;
 		if (!scm.service_installed(installed))
 		{
+			log_err "scm.service_installed() failed." log_end;
+			return -1;
+		}
+
+		if (true != installed)
+		{
 			if (true != scm.install_service(false))
 			{
 				log_err "scm.install_service() failed." log_end;
