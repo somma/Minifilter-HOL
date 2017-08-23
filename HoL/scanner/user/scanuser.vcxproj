@@ -207,7 +207,6 @@
     <ClInclude Include="..\..\..\..\work.mylib\src\RegistryUtil.h" />
     <ClInclude Include="..\..\..\..\work.mylib\src\scm_context.h" />
     <ClInclude Include="..\..\..\..\work.mylib\src\Win32Utils.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
