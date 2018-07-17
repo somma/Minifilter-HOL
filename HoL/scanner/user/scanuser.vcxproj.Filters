@@ -38,7 +38,10 @@
     <ClInclude Include="..\..\..\..\work.mylib\src\Win32Utils.h">
       <Filter>MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -116,7 +116,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions);UNICODE;_UNICODE</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(IFSKIT_INC_PATH);$(DDK_INC_PATH);..\inc</AdditionalIncludeDirectories>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalOptions>/I "c:\work.mylib\src" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/I "./" /I "c:\work.mylib\src" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Midl>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);UNICODE;_UNICODE</PreprocessorDefinitions>
