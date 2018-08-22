@@ -9,16 +9,9 @@
 #include "../inc/hol.h"
 #include "scm_context.h"
 
-/// @brief	Entry point
-int main()
-{	
-	log_info
-		"\n===============================================================================\n"\
-		"Compiled at %s on %s \n"\
-		"===============================================================================\n",
-		__TIME__, __DATE__
-		log_end;
 
+int real_main()
+{	
 	//
 	//	scm_context 객체 생성
 	// 
@@ -44,9 +37,7 @@ int main()
 		return -1;
 	}
 	log_info "%ws installed.", holFilterService log_end;
-	log_info "Press any key to start..." log_end;
-	_pause;
-
+	
 	//
 	//	holFilter 서비스 시작
 	// 
@@ -68,9 +59,7 @@ int main()
 		return -1;
 	}
 	log_info "%ws stopped.", holFilterService log_end;
-	log_info "Press any key to uninstall..." log_end;
-	_pause;
-
+	
 	//
 	//	holFilter 서비스 제거 
 	// 
@@ -80,9 +69,22 @@ int main()
 		return -1;
 	}
 	log_info "%ws uninstalled.", holFilterService log_end;
-	log_info "Press any key to finish..." log_end;
-	_pause;
+	return 0;
+}
 
-    return 0;
+/// @brief	Entry point
+int main()
+{
+	initialize_log(log_mask_all, log_level_debug, log_to_all, L"c:\\dbg\\control-3.log");
+	log_info
+		"\n===============================================================================\n"\
+		"Compiled at %s on %s \n"\
+		"===============================================================================\n",
+		__TIME__, __DATE__
+		log_end;
+	int ret = real_main();
+	finalize_log();
+
+	return ret;
 }
 

@@ -775,8 +775,10 @@ PreCreateOperationCallback (
 		//log_info "hello :)" log_end;
 	}
 
+	log_info "%wZ", &FileNameInfo->Name log_end;
+
 	// hol-todo
-	//FltReleaseFileNameInformation(FileNameInfo);
+	FltReleaseFileNameInformation(FileNameInfo);
     return ret;
 }
 
