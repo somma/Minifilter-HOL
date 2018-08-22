@@ -728,9 +728,9 @@ PreCreateOperationCallback (
 												&FileNameInfo);
 	if (!NT_SUCCESS(status))
 	{
-		log_err "FltGetFileNameInformation() failed. status=0x%08x",
-			status
-			log_end;
+		//log_err "FltGetFileNameInformation() failed. status=0x%08x",
+		//	status
+		//	log_end;
 
 		ASSERT(NULL == FileNameInfo);
 		return FLT_PREOP_SUCCESS_NO_CALLBACK;
@@ -739,20 +739,49 @@ PreCreateOperationCallback (
 	status = FltParseFileNameInformation(FileNameInfo);
 	if (!NT_SUCCESS(status))
 	{
-		log_err "FltParseFileNameInformation() failed. status=0x%08x",
-			status
-			log_end;
+		//log_err "FltParseFileNameInformation() failed. status=0x%08x",
+		//	status
+		//	log_end;
 		
-		// todo: file_monitor
-		//FltReleaseFileNameInformation(FileNameInfo);
+		FltReleaseFileNameInformation(FileNameInfo);
 		return FLT_PREOP_SUCCESS_NO_CALLBACK;
 	}
+	
+	//
+	//	파일 확장자 비교
+	//	
+	FLT_PREOP_CALLBACK_STATUS ret = FLT_PREOP_SUCCESS_WITH_CALLBACK;
+	UNICODE_STRING txt_file;
+	RtlInitUnicodeString(&txt_file, L".txt");
+	if (true == equal_tail_unicode_string(&FileNameInfo->Name, &txt_file, true))
+	{
+		//
+		//	matched
+		// 
+		Data->IoStatus.Status = STATUS_ACCESS_DENIED;
+		Data->IoStatus.Information = 0;
 
-	log_info "%wZ", &FileNameInfo->Name log_end;
+		log_info
+			"Denied, FileName=%wZ",
+			&FileNameInfo->Name
+			log_end;
 
-	// todo: file_monitor
-	//FltReleaseFileNameInformation(FileNameInfo);
-    return FLT_PREOP_SUCCESS_WITH_CALLBACK;
+		ret = FLT_PREOP_COMPLETE;
+	}
+	else
+	{
+		//log_info "Allowed, %wZ", 
+		//	&FileNameInfo->Name 
+		//	log_end;
+	}
+
+	//	todo: file_filter
+	//		- 경로 기반 차단
+	//		- 접근 권한 기반 차단
+	//		- 프로세스 기반 차단
+
+	FltReleaseFileNameInformation(FileNameInfo);
+	return ret;
 }
 
 
@@ -770,7 +799,7 @@ PostCreateOperationCallback(
     UNREFERENCED_PARAMETER( FltObjects );
     UNREFERENCED_PARAMETER( CompletionContext );
     UNREFERENCED_PARAMETER( Flags );
-	log_info "called" log_end;
+	//log_info "called" log_end;
 
     return FLT_POSTOP_FINISHED_PROCESSING;
 }
@@ -789,7 +818,7 @@ PreCloseOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 
 	status = status;
-	log_info "called" log_end;
+	//log_info "called" log_end;
 
 	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -808,7 +837,7 @@ PostCloseOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 	UNREFERENCED_PARAMETER(Flags);
 
-	log_info "called" log_end;
+	//log_info "called" log_end;
 	return FLT_POSTOP_FINISHED_PROCESSING;
 }
 
@@ -826,7 +855,7 @@ PreCleanupOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 
 	status = status;
-	log_info "called" log_end;
+	//log_info "called" log_end;
 
 	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -845,7 +874,7 @@ PostCleanupOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 	UNREFERENCED_PARAMETER(Flags);
 
-	log_info "called" log_end;
+	//log_info "called" log_end;
 	return FLT_POSTOP_FINISHED_PROCESSING;
 }
 
