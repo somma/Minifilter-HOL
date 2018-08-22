@@ -695,8 +695,7 @@ Return Value:
 
     PAGED_CODE();
 
-    PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("holfilter!holfilterUnload: Entered\n") );
+	log_info "called" log_end;
 
     FltUnregisterFilter( gFilterHandle );
 
@@ -744,45 +743,17 @@ PreCreateOperationCallback (
 			status
 			log_end;
 		
-		FltReleaseFileNameInformation(FileNameInfo);
+		// todo: file_monitor
+		//FltReleaseFileNameInformation(FileNameInfo);
 		return FLT_PREOP_SUCCESS_NO_CALLBACK;
-	}
-
-	//
-	//	파일명 비교
-	//
-	FLT_PREOP_CALLBACK_STATUS ret = FLT_PREOP_SUCCESS_WITH_CALLBACK;
-	UNICODE_STRING txt_file;
-	RtlInitUnicodeString(&txt_file, L".txt");
-	if (true == equal_tail_unicode_string(&FileNameInfo->Name, &txt_file, true))
-	{
-		//
-		//	matched
-		// 
-		Data->IoStatus.Status = STATUS_ACCESS_DENIED;
-		Data->IoStatus.Information = 0;
-
-		log_info
-			"Denied, FileName=%wZ",
-			&FileNameInfo->Name
-			log_end;
-
-		
-		ret = FLT_PREOP_COMPLETE;
-	}
-	else
-	{
-		//log_info "hello :)" log_end;
 	}
 
 	log_info "%wZ", &FileNameInfo->Name log_end;
 
-	// hol-todo
-	FltReleaseFileNameInformation(FileNameInfo);
-    return ret;
+	// todo: file_monitor
+	//FltReleaseFileNameInformation(FileNameInfo);
+    return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
-
-
 
 
 FLT_POSTOP_CALLBACK_STATUS
@@ -799,8 +770,7 @@ PostCreateOperationCallback(
     UNREFERENCED_PARAMETER( FltObjects );
     UNREFERENCED_PARAMETER( CompletionContext );
     UNREFERENCED_PARAMETER( Flags );
-
-	//log_info "post create" log_end;
+	log_info "called" log_end;
 
     return FLT_POSTOP_FINISHED_PROCESSING;
 }
@@ -819,7 +789,7 @@ PreCloseOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 
 	status = status;
-	//log_info "pre close" log_end;
+	log_info "called" log_end;
 
 	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -838,8 +808,7 @@ PostCloseOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 	UNREFERENCED_PARAMETER(Flags);
 
-	//log_info "post close" log_end;
-
+	log_info "called" log_end;
 	return FLT_POSTOP_FINISHED_PROCESSING;
 }
 
@@ -857,7 +826,7 @@ PreCleanupOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 
 	status = status;
-	//log_info "pre cleanup" log_end;
+	log_info "called" log_end;
 
 	return FLT_PREOP_SUCCESS_WITH_CALLBACK;
 }
@@ -876,8 +845,7 @@ PostCleanupOperationCallback(
 	UNREFERENCED_PARAMETER(CompletionContext);
 	UNREFERENCED_PARAMETER(Flags);
 
-	//log_info "post cleanup" log_end;
-
+	log_info "called" log_end;
 	return FLT_POSTOP_FINISHED_PROCESSING;
 }
 
