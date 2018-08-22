@@ -8,6 +8,7 @@
 #include <fltKernel.h>
 #include <dontuse.h>
 #include <suppress.h>
+#include "dbg_msg.h"
 
 #pragma prefast(disable:__WARNING_ENCODE_MEMBER_FUNCTION_POINTER, "Not valid for kernel mode drivers")
 
@@ -31,7 +32,8 @@ ULONG gTraceFlags = PTDBG_TRACE_ROUTINES | PTDBG_TRACE_OPERATION_STATUS;
     Prototypes
 *************************************************************************/
 
-EXTERN_C_START
+// todo: using_cpp_pre #1
+//EXTERN_C_START
 
 DRIVER_INITIALIZE DriverEntry;
 NTSTATUS
@@ -106,20 +108,22 @@ holfilterDoRequestOperationStatus(
     _In_ PFLT_CALLBACK_DATA Data
     );
 
-EXTERN_C_END
+//EXTERN_C_END
 
 //
 //  Assign text sections for each routine.
 //
 
-#ifdef ALLOC_PRAGMA
-#pragma alloc_text(INIT, DriverEntry)
-#pragma alloc_text(PAGE, holfilterUnload)
-#pragma alloc_text(PAGE, holfilterInstanceQueryTeardown)
-#pragma alloc_text(PAGE, holfilterInstanceSetup)
-#pragma alloc_text(PAGE, holfilterInstanceTeardownStart)
-#pragma alloc_text(PAGE, holfilterInstanceTeardownComplete)
-#endif
+// todo: using_cpp_pre #2
+
+//#ifdef ALLOC_PRAGMA
+//#pragma alloc_text(INIT, DriverEntry)
+//#pragma alloc_text(PAGE, holfilterUnload)
+//#pragma alloc_text(PAGE, holfilterInstanceQueryTeardown)
+//#pragma alloc_text(PAGE, holfilterInstanceSetup)
+//#pragma alloc_text(PAGE, holfilterInstanceTeardownStart)
+//#pragma alloc_text(PAGE, holfilterInstanceTeardownComplete)
+//#endif
 
 //
 //  operation registration
@@ -545,8 +549,21 @@ Return Value:
 
     UNREFERENCED_PARAMETER( RegistryPath );
 
-    PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("holfilter!DriverEntry: Entered\n") );
+	//
+	//	반드시 DriverEntry 에서 호출해주어야 log_xxx 매크로를 사용할 수 있다. 
+	//
+	if (TRUE != SetProcessNameOffset())
+	{
+		log_err "SetProcessNameOffset() failed." log_end;
+		return STATUS_UNSUCCESSFUL;
+	}
+	
+	log_info
+		"\n===============================================================================\n"\
+		"Compiled at %s on %s \n"\
+		"===============================================================================\n",
+		__TIME__, __DATE__
+		log_end;
 
     //
     //  Register with FltMgr to tell it our callback routines
@@ -602,8 +619,9 @@ Return Value:
 
     PAGED_CODE();
 
-    PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
-                  ("holfilter!holfilterUnload: Entered\n") );
+    //PT_DBG_PRINT( PTDBG_TRACE_ROUTINES,
+    //              ("holfilter!holfilterUnload: Entered\n") );
+	log_info "called" log_end;
 
     FltUnregisterFilter( gFilterHandle );
 

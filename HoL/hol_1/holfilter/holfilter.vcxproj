@@ -151,7 +151,11 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="holfilter.c" />
+    <ClCompile Include="dbg_msg.cpp" />
+    <ClCompile Include="holfilter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dbg_msg.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

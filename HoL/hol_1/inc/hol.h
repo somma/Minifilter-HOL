@@ -15,7 +15,8 @@
 //
 //	holfilter 미니필터 관련 상수 정의 
 // 
-#define		holFilter				L"holfilter.sys"
+#define		holFilter				"holfilter.sys"
+#define		holFilterw				L"holfilter.sys"
 
 #define		holFilterService		L"holfilter"
 #define		holFilterServiceDisplay	L"holfilter service"
